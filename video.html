@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crie seu jogo com IA — togag</title>
+  <meta name="description" content="Descreva o jogo que você quer criar e a IA do togag vai construí-lo para você.">
+  <link rel="stylesheet" href="/video-player.css">
+</head>
+<body>
+
+  <!-- =====================================================
+       TELA DE BOAS-VINDAS
+       Clique necessário para liberar autoplay de áudio/vídeo
+  ===================================================== -->
+  <div id="welcome-screen" role="main">
+    <div class="welcome-particles" aria-hidden="true"></div>
+    <p class="welcome-logo">togag</p>
+    <p class="welcome-tagline">
+      Descreva o jogo que você imagina.<br>
+      A IA cria para você em tempo real.
+    </p>
+    <button id="btn-iniciar" class="btn-iniciar">
+      ▶ Começar a criar
+    </button>
+  </div>
+
+  <!-- =====================================================
+       APP — layout principal
+  ===================================================== -->
+  <div id="app">
+
+    <!-- FUNDO: vídeo da capivara (sempre visível) -->
+    <div id="video-bg" aria-hidden="true">
+      <!-- Vídeo IDLE — loop enquanto espera -->
+      <video
+        id="vid-idle"
+        src="/assets/capivara-idle.mp4"
+        autoplay muted playsinline loop
+        aria-hidden="true"
+      ></video>
+      <!-- Vídeo FALA — toca quando a IA está narrando -->
+      <video
+        id="vid-fala"
+        src="/assets/capivara-fala.mp4"
+        muted playsinline
+        aria-hidden="true"
+      ></video>
+    </div>
+
+    <!-- Overlay escurecido para o chat ficar legível -->
+    <div id="overlay" aria-hidden="true"></div>
+
+    <!-- Canvas auxiliar para o estado "gerando" (fica por cima do vídeo) -->
+    <div id="canvas-gerando" aria-hidden="true">
+      <canvas id="canvas-gen" class="scene-canvas"></canvas>
+    </div>
+
+    <!-- PAINEL CONVERSACIONAL -->
+    <div id="chat-panel" class="oculto" role="region" aria-label="Conversa com a IA" aria-live="polite">
+      <div id="chat-history"></div>
+      <button id="btn-skip" aria-label="Pular essa pergunta">Pular →</button>
+      <div id="input-area">
+        <button id="btn-mic" class="btn-action" title="Gravar voz">🎤</button>
+        <textarea
+          id="user-input"
+          rows="1"
+          placeholder="Descreva seu jogo aqui..."
+          aria-label="Digite sua resposta"
+          autocomplete="off"
+        ></textarea>
+        <button id="btn-send" class="btn-action" title="Enviar">➤</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TELA FINAL -->
+  <div id="final-screen" role="region" aria-label="Jogo criado" aria-live="assertive"></div>
+
+  <!-- HUD -->
+  <div id="hud" aria-hidden="true">
+    <div id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+      <div id="progress-fill"></div>
+    </div>
+    <div id="fsm-indicator">FSM: IDLE</div>
+    <div id="top-controls">
+      <button id="btn-exportar" class="btn-hud" title="Exportar gravação">
+        <span>⬇ Exportar</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/video-player.js"></script>
+</body>
+</html>

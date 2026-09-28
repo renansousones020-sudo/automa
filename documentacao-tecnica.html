@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentação Técnica — togag Video Experience</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    :root {
+      --primary: #7c3aed;
+      --primary-light: #a78bfa;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --surface-2: #f1f5f9;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --code-bg: #1e1e2e;
+      --code-text: #cdd6f4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 48px 40px;
+    }
+
+    /* ── CAPA ─────────────────────────────── */
+    .cover {
+      text-align: center;
+      padding: 60px 20px 80px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: -40px; right: -40px; bottom: -40px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cover-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .cover-logo {
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .cover-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .cover-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .cover-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      font-size: 12px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+    }
+    .cover-meta span { display: flex; align-items: center; gap: 6px; }
+    .cover-meta strong { color: var(--text); }
+
+    /* ── TIPOGRAFIA ───────────────────────── */
+    h1 { font-size: 26px; font-weight: 800; color: var(--text); margin: 48px 0 16px; letter-spacing: -.02em; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+    h2 { font-size: 18px; font-weight: 700; color: var(--text); margin: 36px 0 12px; }
+    h3 { font-size: 14px; font-weight: 700; color: var(--primary); margin: 24px 0 8px; text-transform: uppercase; letter-spacing: .07em; }
+    h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 16px 0 6px; }
+    p  { margin-bottom: 12px; color: var(--text); }
+
+    strong { font-weight: 700; color: var(--text); }
+    em     { font-style: italic; color: var(--text-muted); }
+
+    /* ── SUMÁRIO ──────────────────────────── */
+    .toc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin: 0 0 48px;
+    }
+    .toc h2 { margin: 0 0 16px; font-size: 16px; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 6px 0; font-size: 13px; color: var(--text-muted); }
+    .toc a  { color: var(--primary); text-decoration: none; font-weight: 500; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── BLOCOS DE DESTAQUE ───────────────── */
+    .callout {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 20px 0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 13px;
+    }
+    .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .callout.info    { background: rgba(6,182,212,.07);  border-left: 3px solid var(--accent);   }
+    .callout.tip     { background: rgba(16,185,129,.07); border-left: 3px solid var(--success);  }
+    .callout.warning { background: rgba(245,158,11,.08); border-left: 3px solid var(--warning);  }
+    .callout.danger  { background: rgba(239,68,68,.07);  border-left: 3px solid var(--danger);   }
+
+    /* ── CÓDIGO ───────────────────────────── */
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin: 16px 0;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 12.5px;
+      line-height: 1.65;
+    }
+    code {
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--primary);
+    }
+    pre code { background: none; border: none; padding: 0; color: inherit; font-size: inherit; }
+
+    /* Syntax highlights (manual) */
+    .kw  { color: #cba6f7; } /* keywords */
+    .fn  { color: #89b4fa; } /* function names */
+    .st  { color: #a6e3a1; } /* strings */
+    .cm  { color: #6c7086; font-style: italic; } /* comments */
+    .nu  { color: #fab387; } /* numbers */
+    .op  { color: #89dceb; } /* operators */
+
+    /* ── TABELAS ──────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    th {
+      background: var(--surface-2);
+      font-weight: 700;
+      text-align: left;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-muted);
+    }
+    td { padding: 9px 14px; border: 1px solid var(--border); vertical-align: top; }
+    tr:nth-child(even) td { background: var(--surface); }
+
+    /* ── BADGES ───────────────────────────── */
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .badge.novo    { background: rgba(16,185,129,.12); color: #059669; border: 1px solid rgba(16,185,129,.25); }
+    .badge.mod     { background: rgba(245,158,11,.12); color: #d97706; border: 1px solid rgba(245,158,11,.25); }
+    .badge.dep     { background: rgba(124,58,237,.12); color: #7c3aed; border: 1px solid rgba(124,58,237,.25); }
+    .badge.req     { background: rgba(239,68,68,.12);  color: #dc2626; border: 1px solid rgba(239,68,68,.25);  }
+
+    /* ── DIAGRAMA FSM ─────────────────────── */
+    .fsm-diagram {
+      background: var(--code-bg);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 16px 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--code-text);
+      line-height: 1.8;
+      text-align: center;
+    }
+    .fsm-state {
+      display: inline-block;
+      background: rgba(124,58,237,.25);
+      border: 1px solid rgba(167,139,250,.5);
+      border-radius: 6px;
+      padding: 4px 12px;
+      color: #a78bfa;
+      font-weight: 600;
+      margin: 0 2px;
+    }
+    .fsm-arrow { color: #6c7086; margin: 0 4px; }
+
+    /* ── ARQUIVO CARD ─────────────────────── */
+    .file-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin: 12px 0;
+      overflow: hidden;
+    }
+    .file-card-header {
+      background: var(--surface-2);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .file-card-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text);
+      flex: 1;
+    }
+    .file-card-body { padding: 14px 16px; font-size: 13px; color: var(--text-muted); }
+    .file-card-body ul { padding-left: 18px; }
+    .file-card-body li { margin: 4px 0; }
+
+    /* ── FLUXO ────────────────────────────── */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 16px 0;
+    }
+    .flow-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 12px 0;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 44px;
+      width: 2px;
+      height: calc(100% - 32px);
+      background: var(--border);
+    }
+    .flow-num {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+    }
+    .flow-content h4 { margin: 4px 0 4px; }
+    .flow-content p  { margin: 0; font-size: 13px; color: var(--text-muted); }
+
+    /* ── SEPARADOR ────────────────────────── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* ── PRINT ────────────────────────────── */
+    @media print {
+      body { padding: 24px 28px; font-size: 11.5px; max-width: 100%; }
+      pre  { font-size: 10.5px; page-break-inside: avoid; }
+      .cover { padding: 32px 20px 48px; }
+      .cover-logo { font-size: 38px; }
+      h1 { font-size: 20px; page-break-before: always; }
+      h1:first-of-type { page-break-before: avoid; }
+      h2 { font-size: 15px; }
+      .file-card { page-break-inside: avoid; }
+      .flow-step { page-break-inside: avoid; }
+      .callout { page-break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 24px rgba(124,58,237,.4);
+      transition: transform .15s, box-shadow .15s;
+      z-index: 100;
+    }
+    .print-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,.5); }
+    @media print { .print-btn { display: none; } }
+
+    ul, ol { padding-left: 22px; margin-bottom: 12px; }
+    li { margin: 5px 0; }
+    li p { margin: 0; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨️ Salvar como PDF</button>
+
+<!-- ===============================================================
+     CAPA
+================================================================ -->
+<div class="cover">
+  <div class="cover-badge">Documentação Técnica</div>
+  <div class="cover-logo">togag</div>
+  <div class="cover-title">Sistema de Experiência Conversacional com IA</div>
+  <p class="cover-subtitle">
+    Documentação completa das implementações realizadas no módulo de experiência interativa em vídeo —
+    incluindo FSM, Double Buffering, conversação livre com IA e geração de jogos em tempo real.
+  </p>
+  <div class="cover-meta">
+    <span>📅 <strong>Data:</strong> 24 de setembro de 2026</span>
+    <span>🔖 <strong>Versão:</strong> 1.0.0</span>
+    <span>🏗️ <strong>Projeto:</strong> togag-main</span>
+    <span>⚙️ <strong>Node.js:</strong> v22.12.0</span>
+  </div>
+</div>
+
+<!-- ── SUMÁRIO ──────────────────────────────────────────────── -->
+<div class="toc">
+  <h2>📋 Sumário</h2>
+  <ol>
+    <li><a href="#s1">Visão geral do projeto</a></li>
+    <li><a href="#s2">Arquivos criados e modificados</a></li>
+    <li><a href="#s3">Arquitetura — FSM (Finite State Machine)</a></li>
+    <li><a href="#s4">Double Buffering</a></li>
+    <li><a href="#s5">Canvas Renderer — animações no lugar de vídeos</a></li>
+    <li><a href="#s6">ConversationEngine — conversa livre com IA</a></li>
+    <li><a href="#s7">VoiceInput — entrada por voz</a></li>
+    <li><a href="#s8">GeneratorEngine — geração de jogos em tempo real</a></li>
+    <li><a href="#s9">Exporter — gravação e download WebM</a></li>
+    <li><a href="#s10">Fluxo completo da experiência</a></li>
+    <li><a href="#s11">Backend — rotas adicionadas</a></li>
+    <li><a href="#s12">Instalação e execução (sem permissão de admin)</a></li>
+    <li><a href="#s13">Configuração de produção</a></li>
+    <li><a href="#s14">Referências e dependências</a></li>
+  </ol>
+</div>
+
+
+<!-- ===============================================================
+     1. VISÃO GERAL
+================================================================ -->
+<h1 id="s1">1. Visão geral do projeto</h1>
+
+<p>
+  O <strong>togag</strong> é um criador de jogos com inteligência artificial baseado na stack Google.
+  O módulo documentado aqui é uma adição completamente nova: uma <em>página de experiência interativa</em>
+  acessível em <code>/video</code>, que permite ao usuário descrever verbalmente ou por texto o jogo que
+  deseja criar, enquanto a IA gera o jogo em tempo real com animações de fundo.
+</p>
+
+<div class="callout info">
+  <span class="callout-icon">ℹ️</span>
+  <div>
+    <strong>Escopo da implementação:</strong> O módulo é completamente independente do editor de jogos
+    existente (<code>/editor</code>). Ele se integra ao fluxo como uma tela de entrada, podendo substituir
+    ou complementar o catálogo.
+  </div>
+</div>
+
+<h2>Arquitetura original do togag</h2>
+<table>
+  <tr><th>Camada</th><th>Arquivo</th><th>Responsabilidade</th></tr>
+  <tr><td>Servidor</td><td><code>server/index.js</code></td><td>Express + API REST + streaming NDJSON</td></tr>
+  <tr><td>Agente IA</td><td><code>server/agent.js</code></td><td>Loop: classifica → gera → valida → repara</td></tr>
+  <tr><td>Testador</td><td><code>server/testador.js</code></td><td>Puppeteer headless + coleta de telemetria</td></tr>
+  <tr><td>Frontend</td><td><code>public/app.js</code></td><td>Editor de chat + preview em iframe</td></tr>
+  <tr><td>Harness</td><td><code>public/harness.js</code></td><td>Instrumentação do preview (fps, erros)</td></tr>
+  <tr><td>Voz</td><td><code>public/voz.js</code></td><td>MediaRecorder → transcrição / SpeechSynthesis</td></tr>
+</table>
+
+
+<!-- ===============================================================
+     2. ARQUIVOS
+================================================================ -->
+<h1 id="s2">2. Arquivos criados e modificados</h1>
+
+<div class="file-card">
+  <div class="file-card-header">
+    <span class="badge novo">NOVO</span>
+    <span class="file-card-path">public/video.html</span>
+  </div>
+  <div class="file-card-body">
+    <ul>
+      <li>Tela de boas-vindas com botão "Começar a criar" (destrava política de autoplay de áudio)</li>
+      <li>Dois slots de canvas para <strong>Double Buffer</strong> (<code>#buffer-a</code>, <code>#buffer-b</code>)</li>
+      <li>Painel conversacional com histórico de mensagens (<code>#chat-history</code>)</li>
+      <li>Área de input: <code>textarea</code> auto-resize + botão mic + botão enviar</li>
+      <li>Botão "Pular →" para perguntas opcionais</li>
+      <li>Tela final (<code>#final-screen</code>) gerada dinamicamente</li>
+      <li>HUD com barra de progresso, indicador FSM e botão Exportar</li>
+    </ul>
+  </div>
+</div>
+
+<div class="file-card">
+  <div class="file-card-header">
+    <span class="badge novo">NOVO</span>
+    <span class="file-card-path">public/video-player.css</span>
+  </div>
+  <div class="file-card-body">
+    <ul>
+      <li>Design fullscreen com fundo escuro e glassmorphism</li>
+      <li>Transições de crossfade dos buffers via classes CSS (<code>.visivel</code> / <code>.oculto</code>)</li>
+      <li>Balões de chat estilo iMessage — IA (esquerda) vs usuário (direita)</li>
+      <li>Typing indicator animado com 3 bolinhas pulsantes</li>
+      <li>Textarea de input com auto-resize e foco com glow roxo</li>
+      <li>Botão de microfone com estado "gravando" (pulso vermelho)</li>
+      <li>Eventos de geração (<code>.gen-event</code>) como linhas de log no chat</li>
+      <li>Tipografia: Google Fonts Inter + JetBrains Mono</li>
+      <li>Totalmente responsivo (breakpoint 480px)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="file-card">
+  <div class="file-card-header">
+    <span class="badge novo">NOVO</span>
+    <span class="file-card-path">public/video-player.js</span>
+  </div>
+  <div class="file-card-body">
+    <ul>
+      <li><strong>9 módulos inline</strong> em um único arquivo (sem bundler)</li>
+      <li>Totalmente em ES2021 vanilla JS — sem frameworks, sem dependências externas</li>
+      <li>Veja seções 3–9 desta documentação para detalhes de cada módulo</li>
+    </ul>
+  </div>
+</div>
+
+<div class="file-card">
+  <div class="file-card-header">
+    <span class="badge novo">NOVO</span>
+    <span class="file-card-path">public/data/storyTree.json</span>
+  </div>
+  <div class="file-card-body">
+    <ul>
+      <li>Árvore de decisão original (versão 1 do projeto — opções fixas)</li>
+      <li>Mantida para referência; a versão conversacional não a utiliza mais</li>
+      <li>Tema: "Crie seu jogo ideal" com perguntas sobre gênero, visual e mecânica</li>
+    </ul>
+  </div>
+</div>
+
+<div class="file-card">
+  <div class="file-card-header">
+    <span class="badge mod">MODIFICADO</span>
+    <span class="file-card-path">server/index.js</span>
+  </div>
+  <div class="file-card-body">
+    <ul>
+      <li>Adicionada entrada <code>'/video': 'video.html'</code> ao map <code>PAGINAS</code> (linha 47)</li>
+      <li>A rota <code>GET /video</code> e o redirect de <code>GET /video.html</code> são criados automaticamente pelo loop existente</li>
+      <li>Protegida pelo mesmo middleware de autenticação das outras páginas</li>
+    </ul>
+  </div>
+</div>
+
+<div class="file-card">
+  <div class="file-card-header">
+    <span class="badge novo">NOVO</span>
+    <span class="file-card-path">.env</span>
+  </div>
+  <div class="file-card-body">
+    <ul>
+      <li>Criado a partir de <code>.env.example</code></li>
+      <li><code>GOOGLE_CLOUD_PROJECT</code> definido como <code>placeholder-projeto-gcp</code></li>
+      <li>Necessário substituir pelo ID real do projeto GCP para que a geração de jogos funcione</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     3. FSM
+================================================================ -->
+<h1 id="s3">3. Arquitetura — FSM (Finite State Machine)</h1>
+
+<p>
+  A experiência é controlada por uma máquina de estados finita que garante que só transições
+  válidas sejam executadas, evitando estados inconsistentes na UI.
+</p>
+
+<div class="fsm-diagram">
+  <span class="fsm-state">IDLE</span>
+  <span class="fsm-arrow">──▶</span>
+  <span class="fsm-state">WELCOME</span>
+  <span class="fsm-arrow">──▶</span>
+  <span class="fsm-state">INTRO</span>
+  <span class="fsm-arrow">──▶</span>
+  <span class="fsm-state">CONVERSA</span>
+  <br><br>
+  <span style="color:#6c7086">┌── loop de perguntas ──┐</span>
+  <br>
+  <span class="fsm-state" style="opacity:.4">CONVERSA</span>
+  <span class="fsm-arrow">──▶</span>
+  <span class="fsm-state">CONVERSA</span>
+  <span class="fsm-arrow; margin-left:32px">──▶</span>
+  <span class="fsm-state">GERANDO</span>
+  <span class="fsm-arrow">──▶</span>
+  <span class="fsm-state">FINAL</span>
+  <span class="fsm-arrow">──▶</span>
+  <span class="fsm-state">IDLE</span>
+</div>
+
+<table>
+  <tr><th>Estado</th><th>O que acontece</th><th>Próximos válidos</th></tr>
+  <tr><td><code>IDLE</code></td><td>Estado inicial, antes de qualquer interação</td><td>WELCOME</td></tr>
+  <tr><td><code>WELCOME</code></td><td>Tela de boas-vindas visível; storyTree carregado</td><td>INTRO</td></tr>
+  <tr><td><code>INTRO</code></td><td>Canvas de intro animado; narração da IA</td><td>CONVERSA</td></tr>
+  <tr><td><code>CONVERSA</code></td><td>Chat aberto; usuário responde às perguntas</td><td>CONVERSA, GERANDO</td></tr>
+  <tr><td><code>GERANDO</code></td><td>Canvas "gerando" + stream de eventos da IA</td><td>FINAL</td></tr>
+  <tr><td><code>FINAL</code></td><td>Jogo pronto; botões "Jogar" e "Recomeçar"</td><td>IDLE</td></tr>
+</table>
+
+<pre><code><span class="kw">const</span> FSM = (() <span class="op">=&gt;</span> {
+  <span class="kw">const</span> T = {
+    IDLE:     [<span class="st">'WELCOME'</span>],
+    WELCOME:  [<span class="st">'INTRO'</span>],
+    INTRO:    [<span class="st">'CONVERSA'</span>],
+    CONVERSA: [<span class="st">'CONVERSA'</span>, <span class="st">'GERANDO'</span>],
+    GERANDO:  [<span class="st">'FINAL'</span>],
+    FINAL:    [<span class="st">'IDLE'</span>],
+  };
+  <span class="kw">function</span> <span class="fn">ir</span>(prox) {
+    <span class="kw">if</span> (!(T[estado] || []).<span class="fn">includes</span>(prox)) {
+      console.<span class="fn">warn</span>(<span class="st">`[FSM] inválido: ${estado} → ${prox}`</span>); <span class="kw">return false</span>;
+    }
+    estado = prox; <span class="fn">emit</span>(<span class="st">'mudanca'</span>, { de: anterior, para: prox });
+    <span class="kw">return true</span>;
+  }
+  <span class="kw">return</span> { ir, on, atual: () <span class="op">=&gt;</span> estado };
+})();</code></pre>
+
+
+<!-- ===============================================================
+     4. DOUBLE BUFFERING
+================================================================ -->
+<h1 id="s4">4. Double Buffering</h1>
+
+<p>
+  O Double Buffer mantém dois slots de canvas no DOM (<code>#buffer-a</code> e <code>#buffer-b</code>).
+  Enquanto um está visível ao usuário, o outro é preparado em segundo plano.
+  O swap é feito com uma transição CSS de 260ms, eliminando tela preta entre cenas.
+</p>
+
+<table>
+  <tr><th>Slot</th><th>Classes CSS</th><th>Papel</th></tr>
+  <tr><td><code>#buffer-a</code></td><td><code>.visivel</code> (opacity: 1)</td><td>Cena atual, visível ao usuário</td></tr>
+  <tr><td><code>#buffer-b</code></td><td><code>.oculto</code> (opacity: 0)</td><td>Próxima cena sendo preparada</td></tr>
+</table>
+
+<pre><code><span class="cm">// Swap: standby se torna visível, ativo some</span>
+<span class="kw">function</span> <span class="fn">trocar</span>(ms = <span class="nu">280</span>) {
+  <span class="kw">const</span> prox = ativoId === <span class="st">'A'</span> ? <span class="st">'B'</span> : <span class="st">'A'</span>;
+  slots[prox].<span class="fn">classList</span>.<span class="fn">remove</span>(<span class="st">'oculto'</span>);  slots[prox].<span class="fn">classList</span>.<span class="fn">add</span>(<span class="st">'visivel'</span>);
+  slots[ativoId].<span class="fn">classList</span>.<span class="fn">remove</span>(<span class="st">'visivel'</span>); slots[ativoId].<span class="fn">classList</span>.<span class="fn">add</span>(<span class="st">'oculto'</span>);
+  ativoId = prox;
+}</code></pre>
+
+<div class="callout tip">
+  <span class="callout-icon">💡</span>
+  <div>
+    <strong>WeakMap por canvas:</strong> Cada canvas tem seu próprio <code>requestAnimationFrame</code> ID
+    armazenado num <code>WeakMap</code>. Isso permite que dois canvases animem em paralelo sem cancelar um ao outro,
+    essencial para o crossfade suave.
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     5. CANVAS RENDERER
+================================================================ -->
+<h1 id="s5">5. Canvas Renderer — animações no lugar de vídeos</h1>
+
+<p>
+  Em vez de vídeos <code>.mp4</code> reais (que precisariam de arquivos de asset), cada cena é um
+  animação procedural desenhada pela Canvas 2D API. Isso torna a experiência completamente
+  auto-contida, sem assets externos.
+</p>
+
+<table>
+  <tr><th>Tipo de cena</th><th>Estado FSM</th><th>O que renderiza</th></tr>
+  <tr>
+    <td><code>intro</code></td><td>INTRO</td>
+    <td>Gradiente radial dinâmico + 55 partículas flutuantes + anéis pulsantes + ícone 🤖 + logo togag</td>
+  </tr>
+  <tr>
+    <td><code>conversa</code></td><td>CONVERSA</td>
+    <td>Fundo escuro + 4 orbs de luz coloridos flutuando + grid de pontos com parallax</td>
+  </tr>
+  <tr>
+    <td><code>gerando</code></td><td>GERANDO</td>
+    <td>5 anéis rotativos sobrepostos + 40 partículas orbitando + ícone ⚙️ pulsando + texto de status atualizado em tempo real</td>
+  </tr>
+  <tr>
+    <td><code>final</code></td><td>FINAL</td>
+    <td>Estrelas cintilantes + troféu 🏆 com efeito de escala pulsante</td>
+  </tr>
+</table>
+
+<div class="callout info">
+  <span class="callout-icon">🎨</span>
+  <div>
+    <strong>Resolução DPI:</strong> Todos os canvases usam <code>canvas.width = elemento.width × devicePixelRatio</code>
+    com <code>ctx.setTransform(dpr, 0, 0, dpr, 0, 0)</code> para nitidez total em telas Retina/HiDPI.
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     6. CONVERSATION ENGINE
+================================================================ -->
+<h1 id="s6">6. ConversationEngine — conversa livre com IA</h1>
+
+<p>
+  Substitui a árvore de decisão com opções fixas por um fluxo conversacional aberto.
+  A IA faz perguntas abertas e o usuário responde com qualquer texto ou fala.
+</p>
+
+<h2>Sequência de perguntas</h2>
+<table>
+  <tr><th>#</th><th>ID</th><th>Pergunta da IA</th><th>Obrigatória</th></tr>
+  <tr>
+    <td>1</td><td><code>descricao</code></td>
+    <td>"Olá! 👋 Que tipo de jogo você quer criar? Me conta a sua ideia!"</td>
+    <td>✅ Sim</td>
+  </tr>
+  <tr>
+    <td>2</td><td><code>detalhes</code></td>
+    <td>"Que ideia incrível! 🎮 Algum detalhe especial que você quer? Mecânica, visual, história..."</td>
+    <td>❌ Opcional (pode pular)</td>
+  </tr>
+</table>
+
+<h2>Como o prompt de geração é montado</h2>
+<pre><code><span class="kw">function</span> <span class="fn">promptParaGeracao</span>() {
+  <span class="kw">let</span> p = respostas.descricao || <span class="st">'crie um jogo legal'</span>;
+  <span class="kw">if</span> (respostas.detalhes) p += <span class="st">'. Detalhes extras: '</span> + respostas.detalhes;
+  <span class="kw">return</span> p;
+}
+<span class="cm">// Exemplo de saída:
+// "um jogo de plataforma com aliens, estilo retrô. Detalhes extras: quero power-ups e chefe final"</span></code></pre>
+
+<div class="callout tip">
+  <span class="callout-icon">💡</span>
+  <div>
+    Para adicionar mais etapas à conversa, basta adicionar objetos ao array <code>PERGUNTAS</code>
+    no início do módulo <code>ConversationEngine</code> — sem alterar nenhum outro código.
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     7. VOICE INPUT
+================================================================ -->
+<h1 id="s7">7. VoiceInput — entrada por voz</h1>
+
+<p>
+  O usuário pode clicar no botão 🎤 para gravar sua resposta em vez de digitar.
+  O áudio é capturado via <code>MediaRecorder</code> e enviado ao endpoint
+  <code>POST /api/transcrever</code> (já existente no togag, usa Gemini para transcrição).
+</p>
+
+<div class="flow">
+  <div class="flow-step">
+    <div class="flow-num">1</div>
+    <div class="flow-content">
+      <h4>Permissão de microfone</h4>
+      <p><code>navigator.mediaDevices.getUserMedia({ audio: true })</code> — solicita acesso ao mic do usuário.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">2</div>
+    <div class="flow-content">
+      <h4>Gravação com MediaRecorder</h4>
+      <p>Chunks de 100ms são coletados. Formato preferido: <code>audio/webm;codecs=opus</code> com fallback.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">3</div>
+    <div class="flow-content">
+      <h4>Envio para transcrição</h4>
+      <p>O Blob é convertido para Base64 e enviado como JSON para <code>POST /api/transcrever</code>.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">4</div>
+    <div class="flow-content">
+      <h4>Preenchimento automático</h4>
+      <p>O texto transcrito preenche o <code>textarea</code> automaticamente, pronto para revisão e envio.</p>
+    </div>
+  </div>
+</div>
+
+<div class="callout warning">
+  <span class="callout-icon">⚠️</span>
+  <div>
+    <strong>Dependência de GCP:</strong> O endpoint <code>/api/transcrever</code> usa o Gemini para transcrição.
+    Sem credenciais GCP válidas, a transcrição falhará graciosamente — o usuário ainda pode digitar normalmente.
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     8. GENERATOR ENGINE
+================================================================ -->
+<h1 id="s8">8. GeneratorEngine — geração de jogos em tempo real</h1>
+
+<p>
+  Após coletar as respostas do usuário, o <code>GeneratorEngine</code> cria um projeto e
+  inicia a geração do jogo via streaming NDJSON, exatamente como o editor existente faz.
+</p>
+
+<h2>Fluxo de geração</h2>
+<pre><code><span class="cm">// 1. Cria o projeto</span>
+POST /api/projeto
+<span class="op">←</span> { projetoId: <span class="st">"pABC12345"</span> }
+
+<span class="cm">// 2. Inicia geração (stream NDJSON)</span>
+POST /api/chat/pABC12345
+<span class="op">←</span> { <span class="st">"tipo"</span>: <span class="st">"status"</span>, <span class="st">"texto"</span>: <span class="st">"Analisando o pedido..."</span> }
+<span class="op">←</span> { <span class="st">"tipo"</span>: <span class="st">"passo"</span>, <span class="st">"ferramenta"</span>: <span class="st">"write_file"</span>, <span class="st">"path"</span>: <span class="st">"main.js"</span> }
+<span class="op">←</span> { <span class="st">"tipo"</span>: <span class="st">"passo"</span>, <span class="st">"etapa"</span>: <span class="st">"Testando o jogo"</span> }
+<span class="op">←</span> { <span class="st">"tipo"</span>: <span class="st">"concluido"</span>, <span class="st">"resumo"</span>: <span class="st">"Jogo de plataforma criado com sucesso!"</span> }</code></pre>
+
+<h2>Eventos tratados</h2>
+<table>
+  <tr><th>Tipo de evento</th><th>O que o frontend faz</th></tr>
+  <tr><td><code>status</code></td><td>Adiciona linha de log no chat + atualiza texto do canvas "gerando"</td></tr>
+  <tr><td><code>passo</code></td><td>Mostra nome da ferramenta/etapa como evento no chat</td></tr>
+  <tr><td><code>concluido</code></td><td>Transita para estado FINAL, exibe tela de jogo pronto</td></tr>
+  <tr><td><code>erro</code></td><td>Exibe mensagem de erro, retorna ao estado CONVERSA após 3s</td></tr>
+</table>
+
+<pre><code><span class="kw">async function</span>* <span class="fn">gerarJogo</span>(pedido) {
+  <span class="kw">const</span> resp = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="st">`/api/chat/${projetoId}`</span>, {
+    method: <span class="st">'POST'</span>,
+    headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+    body: <span class="fn">JSON.stringify</span>({ pedido }),
+  });
+  <span class="cm">// Lê o stream NDJSON linha por linha com ReadableStream</span>
+  <span class="kw">const</span> reader = resp.body.<span class="fn">getReader</span>();
+  <span class="kw">const</span> dec = <span class="kw">new</span> <span class="fn">TextDecoder</span>();
+  <span class="kw">let</span> buf = <span class="st">''</span>;
+  <span class="kw">while</span> (<span class="kw">true</span>) {
+    <span class="kw">const</span> { done, value } = <span class="kw">await</span> reader.<span class="fn">read</span>();
+    <span class="kw">if</span> (done) <span class="kw">break</span>;
+    buf += dec.<span class="fn">decode</span>(value, { stream: <span class="kw">true</span> });
+    <span class="kw">for</span> (<span class="kw">const</span> linha <span class="kw">of</span> buf.<span class="fn">split</span>(<span class="st">'\n'</span>).<span class="fn">slice</span>(<span class="nu">0</span>, -<span class="nu">1</span>)) {
+      <span class="kw">try</span> { <span class="kw">yield</span> <span class="fn">JSON.parse</span>(linha); } <span class="kw">catch</span> {}
+    }
+  }
+}</code></pre>
+
+
+<!-- ===============================================================
+     9. EXPORTER
+================================================================ -->
+<h1 id="s9">9. Exporter — gravação e download WebM</h1>
+
+<p>
+  A gravação começa automaticamente quando a experiência inicia. O usuário pode clicar em
+  "⬇ Exportar" para baixar o WebM com a sessão completa.
+</p>
+
+<table>
+  <tr><th>Parâmetro</th><th>Valor</th></tr>
+  <tr><td>API</td><td><code>canvas.captureStream(30)</code> + <code>MediaRecorder</code></td></tr>
+  <tr><td>Formato preferido</td><td><code>video/webm;codecs=vp9,opus</code></td></tr>
+  <tr><td>Fallback</td><td><code>video/webm;codecs=vp8,opus</code> → <code>video/webm</code></td></tr>
+  <tr><td>Chunks</td><td>A cada 100ms</td></tr>
+  <tr><td>Download</td><td>Blob URL → <code>&lt;a&gt;</code> virtual → <code>click()</code></td></tr>
+  <tr><td>Nome do arquivo</td><td><code>togag-{timestamp}.webm</code></td></tr>
+</table>
+
+<div class="callout info">
+  <span class="callout-icon">ℹ️</span>
+  <div>
+    O plano original previa conversão para <strong>MP4 com H.264</strong> via <code>ffmpeg-static</code>
+    no servidor. Por ora, o download é em WebM (suportado em Chrome, Firefox, Edge). Para converter para MP4,
+    adicione <code>ffmpeg-static</code> ao <code>package.json</code> e implemente o endpoint
+    <code>POST /api/video-export</code> documentado no <code>implementation_plan.md</code>.
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     10. FLUXO COMPLETO
+================================================================ -->
+<h1 id="s10">10. Fluxo completo da experiência</h1>
+
+<div class="flow">
+  <div class="flow-step">
+    <div class="flow-num">1</div>
+    <div class="flow-content">
+      <h4>Tela de boas-vindas (estado: IDLE → WELCOME)</h4>
+      <p>Partículas animadas. Usuário clica "Começar a criar" — destrava política de autoplay de áudio.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">2</div>
+    <div class="flow-content">
+      <h4>Animação de intro (estado: INTRO)</h4>
+      <p>Canvas com partículas e anel pulsante. IA fala: "Bem-vindo ao togag...". Gravação WebM inicia.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">3</div>
+    <div class="flow-content">
+      <h4>Conversa — pergunta 1 (estado: CONVERSA)</h4>
+      <p>Swap para canvas de conversa. IA digita... aparece balão: "Que tipo de jogo você quer criar?"</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">4</div>
+    <div class="flow-content">
+      <h4>Usuário responde (texto ou voz)</h4>
+      <p>Digita livremente + Enter, ou clica 🎤 → fala → transcrição automática → confirmação → envio.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">5</div>
+    <div class="flow-content">
+      <h4>Conversa — pergunta 2 (estado: CONVERSA)</h4>
+      <p>IA pergunta por detalhes. Botão "Pular →" disponível para esta etapa opcional.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">6</div>
+    <div class="flow-content">
+      <h4>Geração (estado: GERANDO)</h4>
+      <p>Swap para canvas com anéis rotativos. Cria projeto via API. Stream NDJSON inicia.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">7</div>
+    <div class="flow-content">
+      <h4>Eventos em tempo real</h4>
+      <p>Cada passo da IA (lendo arquivo, escrevendo código, testando) aparece como linha de log no chat.</p>
+    </div>
+  </div>
+  <div class="flow-step">
+    <div class="flow-num">8</div>
+    <div class="flow-content">
+      <h4>Jogo pronto (estado: FINAL)</h4>
+      <p>Swap para canvas de estrelas. Tela final com "▶ Jogar agora" → redireciona para <code>/jogar?id=...</code></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     11. BACKEND
+================================================================ -->
+<h1 id="s11">11. Backend — rotas adicionadas</h1>
+
+<h2>Mudança em <code>server/index.js</code></h2>
+<pre><code><span class="cm">// Antes (linha 47):</span>
+<span class="kw">const</span> PAGINAS = { <span class="st">'/entrar'</span>: <span class="st">'entrar.html'</span>, <span class="st">'/editor'</span>: <span class="st">'editor.html'</span>, <span class="st">'/jogar'</span>: <span class="st">'jogar.html'</span> };
+
+<span class="cm">// Depois:</span>
+<span class="kw">const</span> PAGINAS = {
+  <span class="st">'/entrar'</span>: <span class="st">'entrar.html'</span>,
+  <span class="st">'/editor'</span>: <span class="st">'editor.html'</span>,
+  <span class="st">'/jogar'</span>:  <span class="st">'jogar.html'</span>,
+  <span class="st">'/video'</span>:  <span class="st">'video.html'</span>,  <span class="cm">// ← NOVO</span>
+};</code></pre>
+
+<p>
+  O loop existente que cria as rotas lida automaticamente com a nova entrada — não foi necessário
+  adicionar nenhum <code>app.get()</code> explícito.
+</p>
+
+<h2>Endpoints utilizados pela experiência (já existentes)</h2>
+<table>
+  <tr><th>Método</th><th>Rota</th><th>Utilizado por</th></tr>
+  <tr><td><code>POST</code></td><td><code>/api/projeto</code></td><td>GeneratorEngine — cria o projeto do jogo</td></tr>
+  <tr><td><code>POST</code></td><td><code>/api/chat/:projetoId</code></td><td>GeneratorEngine — stream NDJSON de geração</td></tr>
+  <tr><td><code>POST</code></td><td><code>/api/transcrever</code></td><td>VoiceInput — transcrição de áudio</td></tr>
+  <tr><td><code>GET</code></td><td><code>/video</code></td><td>Serve video.html (nova rota)</td></tr>
+</table>
+
+
+<!-- ===============================================================
+     12. INSTALAÇÃO
+================================================================ -->
+<h1 id="s12">12. Instalação e execução (sem permissão de admin)</h1>
+
+<div class="callout warning">
+  <span class="callout-icon">⚠️</span>
+  <div>
+    Como o computador não tem permissão de administrador, o Node.js foi instalado no modo portátil
+    (zip extraído em <code>%USERPROFILE%\node-portable\</code>) sem necessidade de instalador.
+  </div>
+</div>
+
+<h2>Node.js portátil instalado</h2>
+<table>
+  <tr><th>Item</th><th>Detalhe</th></tr>
+  <tr><td>Versão</td><td>Node.js v22.12.0</td></tr>
+  <tr><td>npm</td><td>v10.9.2</td></tr>
+  <tr><td>Localização</td><td><code>%USERPROFILE%\node-portable\node-v22.12.0-win-x64\</code></td></tr>
+  <tr><td>Pacotes instalados</td><td>132 packages, 0 vulnerabilidades</td></tr>
+</table>
+
+<h2>Como iniciar o servidor</h2>
+<pre><code><span class="cm"># Abra um novo PowerShell e execute:</span>
+<span class="op">$</span>nodeDir = <span class="st">"$env:USERPROFILE\node-portable\node-v22.12.0-win-x64"</span>
+<span class="op">&amp;</span> <span class="st">"$nodeDir\node.exe"</span> server<span class="op">/</span>index.js</code></pre>
+
+<h2>Credenciais de acesso</h2>
+<table>
+  <tr><th>Campo</th><th>Valor</th></tr>
+  <tr><td>URL</td><td><code>http://localhost:3000</code></td></tr>
+  <tr><td>Usuário</td><td><code>admin</code></td></tr>
+  <tr><td>Senha</td><td><em>(gerada na primeira execução — anote-a!)</em></td></tr>
+  <tr><td>Página da experiência</td><td><code>http://localhost:3000/video</code></td></tr>
+</table>
+
+<div class="callout info">
+  <span class="callout-icon">ℹ️</span>
+  <div>
+    O PowerShell do sistema bloqueia arquivos <code>.ps1</code> por política de segurança.
+    Por isso, use sempre <code>node.exe</code> diretamente ou <code>npm.cmd</code>
+    (não <code>npm</code> diretamente no PowerShell).
+  </div>
+</div>
+
+
+<!-- ===============================================================
+     13. CONFIGURAÇÃO DE PRODUÇÃO
+================================================================ -->
+<h1 id="s13">13. Configuração de produção</h1>
+
+<h2>Variáveis de ambiente (<code>.env</code>)</h2>
+<table>
+  <tr><th>Variável</th><th>Descrição</th><th>Obrigatória para</th></tr>
+  <tr>
+    <td><code>GOOGLE_CLOUD_PROJECT</code></td>
+    <td>ID do projeto no Google Cloud Platform</td>
+    <td class="badge req">Geração + Voz</td>
+  </tr>
+  <tr>
+    <td><code>GOOGLE_CLOUD_LOCATION</code></td>
+    <td>Região (padrão: <code>global</code>)</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><code>MODELO_CODIGO</code></td>
+    <td>Modelo Gemini para geração de código</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><code>MODELO_CLASSIFICADOR</code></td>
+    <td>Modelo Gemini para classificação de intenção</td>
+    <td>—</td>
+  </tr>
+  <tr>
+    <td><code>PORT</code></td>
+    <td>Porta do servidor (padrão: <code>3000</code>)</td>
+    <td>—</td>
+  </tr>
+</table>
+
+<div class="callout danger">
+  <span class="callout-icon">🔐</span>
+  <div>
+    <strong>Nunca comite o <code>.env</code> no git.</strong> Ele está no <code>.gitignore</code>.
+    Para produção, use variáveis de ambiente do sistema ou um secrets manager.
+  </div>
+</div>
+
+<h2>Para ativar a geração real de jogos</h2>
+<ol>
+  <li>Acesse o <a href="https://console.cloud.google.com">Google Cloud Console</a></li>
+  <li>Anote o ID do seu projeto (formato: <code>meu-projeto-123456</code>)</li>
+  <li>Execute <code>gcloud auth application-default login</code> na máquina do servidor</li>
+  <li>Substitua <code>placeholder-projeto-gcp</code> no <code>.env</code> pelo ID real</li>
+  <li>Reinicie o servidor</li>
+</ol>
+
+<h2>Funcionalidades sem GCP configurado</h2>
+<table>
+  <tr><th>Funcionalidade</th><th>Sem GCP</th><th>Com GCP</th></tr>
+  <tr><td>Tela de boas-vindas</td><td>✅</td><td>✅</td></tr>
+  <tr><td>Animações de canvas</td><td>✅</td><td>✅</td></tr>
+  <tr><td>Conversa de chat</td><td>✅</td><td>✅</td></tr>
+  <tr><td>Gravação WebM (Exportar)</td><td>✅</td><td>✅</td></tr>
+  <tr><td>Transcrição de voz</td><td>❌</td><td>✅</td></tr>
+  <tr><td>Geração do jogo</td><td>❌</td><td>✅</td></tr>
+  <tr><td>Narração por SpeechSynthesis</td><td>✅</td><td>✅</td></tr>
+</table>
+
+
+<!-- ===============================================================
+     14. REFERÊNCIAS
+================================================================ -->
+<h1 id="s14">14. Referências e dependências</h1>
+
+<h2>Dependências de runtime (sem novas adições)</h2>
+<table>
+  <tr><th>Pacote</th><th>Versão</th><th>Uso</th></tr>
+  <tr><td><code>express</code></td><td>^5.1.0</td><td>Servidor HTTP</td></tr>
+  <tr><td><code>@google/genai</code></td><td>^2.23.0</td><td>Cliente Gemini / Vertex AI</td></tr>
+  <tr><td><code>dotenv</code></td><td>^17.0.0</td><td>Carrega <code>.env</code></td></tr>
+  <tr><td><code>puppeteer-core</code></td><td>^25.11.0</td><td>Testador headless</td></tr>
+</table>
+
+<h2>APIs do browser utilizadas</h2>
+<table>
+  <tr><th>API</th><th>Módulo que usa</th><th>Suporte</th></tr>
+  <tr><td><code>Canvas 2D API</code></td><td>CanvasRenderer</td><td>Todos os browsers modernos</td></tr>
+  <tr><td><code>MediaRecorder</code></td><td>VoiceInput, Exporter</td><td>Chrome 47+, Firefox 25+, Edge 79+</td></tr>
+  <tr><td><code>SpeechSynthesis</code></td><td>AudioEngine</td><td>Chrome, Edge, Safari (limitado no Firefox)</td></tr>
+  <tr><td><code>MediaDevices.getUserMedia</code></td><td>VoiceInput</td><td>Requer HTTPS em produção</td></tr>
+  <tr><td><code>ReadableStream</code></td><td>GeneratorEngine</td><td>Chrome 43+, Firefox 65+, Edge 79+</td></tr>
+  <tr><td><code>WeakMap</code></td><td>DoubleBuffer</td><td>ES2015+</td></tr>
+</table>
+
+<h2>Documentos de referência do projeto</h2>
+<ul>
+  <li><code>implementation_plan.md</code> — Plano técnico original com decisões de design (D1–D4)</li>
+  <li><code>README.md</code> — Documentação geral do togag</li>
+  <li><code>public/data/storyTree.json</code> — Árvore de decisão original (versão 1)</li>
+</ul>
+
+<hr>
+
+<p style="text-align:center; color: var(--text-muted); font-size: 12px; margin-top: 40px;">
+  Documentação gerada automaticamente em 24/09/2026 &nbsp;·&nbsp;
+  togag v0.1.0 &nbsp;·&nbsp;
+  Node.js v22.12.0
+</p>
+
+</body>
+</html>

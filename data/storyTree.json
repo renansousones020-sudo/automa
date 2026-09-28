@@ -1,0 +1,129 @@
+{
+  "titulo": "Crie seu jogo ideal",
+  "inicio": "intro",
+  "cenas": {
+    "intro": {
+      "tipo": "intro",
+      "titulo": "Crie seu jogo ideal",
+      "subtitulo": "Uma jornada interativa para descobrir o jogo perfeito para você",
+      "narracao": "Bem-vindo ao togag. Vamos descobrir juntos o seu jogo ideal. Responda às perguntas e deixe a inteligência artificial criar algo único para você.",
+      "proximo": "genero"
+    },
+
+    "genero": {
+      "tipo": "chat",
+      "pergunta": "Que tipo de jogo te emociona mais?",
+      "narracao": "Que tipo de jogo te emociona mais?",
+      "icone": "🎮",
+      "opcoes": [
+        { "texto": "⚔️ Aventura e RPG",        "valor": "rpg",      "proximo": "visual_rpg"   },
+        { "texto": "🚀 Ação e Plataforma",      "valor": "acao",     "proximo": "visual_acao"  },
+        { "texto": "🧩 Puzzle e Estratégia",    "valor": "puzzle",   "proximo": "visual_puzzle" },
+        { "texto": "🏎️ Corrida e Velocidade",  "valor": "corrida",  "proximo": "visual_corrida" }
+      ]
+    },
+
+    "visual_rpg": {
+      "tipo": "chat",
+      "pergunta": "Como você imagina o visual do seu RPG?",
+      "narracao": "Ótima escolha! Como você imagina o visual do seu RPG de aventura?",
+      "icone": "🎨",
+      "opcoes": [
+        { "texto": "🏰 Fantasy épico com castelos e dragões",  "valor": "fantasy",  "proximo": "mecanica_rpg"   },
+        { "texto": "🌌 Sci-fi com naves e planetas alienígenas", "valor": "scifi", "proximo": "mecanica_rpg"   },
+        { "texto": "🌿 Pixel art retrô e charmoso",            "valor": "pixel",    "proximo": "mecanica_rpg"   }
+      ]
+    },
+
+    "visual_acao": {
+      "tipo": "chat",
+      "pergunta": "Qual estilo visual combina com sua ação?",
+      "narracao": "Que ação! Qual estilo visual combina com o seu jogo?",
+      "icone": "🎨",
+      "opcoes": [
+        { "texto": "💥 Explosivo e neon cyberpunk",  "valor": "neon",   "proximo": "mecanica_acao" },
+        { "texto": "🌴 Colorido e descontraído",     "valor": "fun",    "proximo": "mecanica_acao" },
+        { "texto": "⚫ Sombrio e minimalista",        "valor": "dark",   "proximo": "mecanica_acao" }
+      ]
+    },
+
+    "visual_puzzle": {
+      "tipo": "chat",
+      "pergunta": "Como deve ser o visual do puzzle?",
+      "narracao": "Inteligente! Como deve ser o visual do seu puzzle?",
+      "icone": "🎨",
+      "opcoes": [
+        { "texto": "🔵 Limpo e geométrico",       "valor": "geo",   "proximo": "mecanica_puzzle" },
+        { "texto": "🍄 Fofo e cartunesco",         "valor": "fofo",  "proximo": "mecanica_puzzle" },
+        { "texto": "🧪 Científico e tecnológico",  "valor": "tech",  "proximo": "mecanica_puzzle" }
+      ]
+    },
+
+    "visual_corrida": {
+      "tipo": "chat",
+      "pergunta": "Que cenário você quer rasgar?",
+      "narracao": "Velocidade total! Que cenário você quer rasgar?",
+      "icone": "🎨",
+      "opcoes": [
+        { "texto": "🏙️ Cidade futurista à noite",   "valor": "cidade",  "proximo": "mecanica_corrida" },
+        { "texto": "🏔️ Montanhas e natureza selvagem", "valor": "montanha", "proximo": "mecanica_corrida" },
+        { "texto": "🌠 No espaço, entre asteroides", "valor": "espaco",  "proximo": "mecanica_corrida" }
+      ]
+    },
+
+    "mecanica_rpg": {
+      "tipo": "chat",
+      "pergunta": "Qual mecânica você quer explorar?",
+      "narracao": "Quase lá! Qual mecânica principal você quer explorar no jogo?",
+      "icone": "⚙️",
+      "opcoes": [
+        { "texto": "🗡️ Combate em tempo real",     "valor": "combate", "proximo": "final" },
+        { "texto": "🃏 Sistema de cartas e turnos", "valor": "cartas",  "proximo": "final" },
+        { "texto": "🗺️ Exploração e descoberta",   "valor": "explore", "proximo": "final" }
+      ]
+    },
+
+    "mecanica_acao": {
+      "tipo": "chat",
+      "pergunta": "Como é a movimentação?",
+      "narracao": "Vamos definir a movimentação do seu jogo!",
+      "icone": "⚙️",
+      "opcoes": [
+        { "texto": "🏃 Plataforma 2D clássica",    "valor": "plat2d", "proximo": "final" },
+        { "texto": "🔫 Top-down com tiro",          "valor": "topdown","proximo": "final" },
+        { "texto": "🌀 Dash e esquiva frenéticos",  "valor": "dash",   "proximo": "final" }
+      ]
+    },
+
+    "mecanica_puzzle": {
+      "tipo": "chat",
+      "pergunta": "Qual desafio principal?",
+      "narracao": "Qual será o desafio central do seu puzzle?",
+      "icone": "⚙️",
+      "opcoes": [
+        { "texto": "🔢 Lógica matemática",          "valor": "logica",  "proximo": "final" },
+        { "texto": "🎯 Física e trajetórias",        "valor": "fisica",  "proximo": "final" },
+        { "texto": "🔤 Palavras e linguagem",        "valor": "palavras","proximo": "final" }
+      ]
+    },
+
+    "mecanica_corrida": {
+      "tipo": "chat",
+      "pergunta": "Que elemento especial você quer?",
+      "narracao": "Que elemento especial tornaria sua corrida incrível?",
+      "icone": "⚙️",
+      "opcoes": [
+        { "texto": "🪄 Poderes e power-ups",        "valor": "powers", "proximo": "final" },
+        { "texto": "🔧 Customização de veículo",    "valor": "custom", "proximo": "final" },
+        { "texto": "🤝 Multijogador local",         "valor": "multi",  "proximo": "final" }
+      ]
+    },
+
+    "final": {
+      "tipo": "final",
+      "titulo": "Seu jogo ideal está pronto!",
+      "narracao": "Incrível! Com base nas suas escolhas, a inteligência artificial do togag vai criar o jogo perfeito para você. Estamos gerando sua aventura agora!",
+      "proximo": null
+    }
+  }
+}
